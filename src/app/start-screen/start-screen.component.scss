@@ -1,0 +1,35 @@
+.start-screen {
+  background-color: #404040;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 100vh;
+  }
+}
+
+.start-game {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100vh;
+  max-height: 100vh;
+
+  img {
+    width: 35vw;
+    height: 20vh;
+    margin: 32px;
+
+    &:hover {
+      filter: brightness(1.25);
+      cursor: pointer;
+    }
+  }
+}

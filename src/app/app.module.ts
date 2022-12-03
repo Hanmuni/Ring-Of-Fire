@@ -13,6 +13,8 @@ import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import { GameInstructionsComponent } from './game-instructions/game-instructions.component';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     StartScreenComponent,
     GameSectionComponent,
     PlayerComponent,
-    AddPlayerDialogComponent
+    AddPlayerDialogComponent,
+    GameInstructionsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatInputModule,
     FormsModule,
+    MatCardModule,
     BrowserAnimationsModule
   ],
   providers: [],

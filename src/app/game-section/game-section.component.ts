@@ -26,11 +26,14 @@ export class GameSectionComponent implements OnInit {
     if (!this.drawCardAnimation) {
       this.drawCardAnimation = true;
       this.currentCard = this.game.stack.pop();
+      this.game.currentPlayer++;
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 
       setTimeout(() => {
         this.drawCardAnimation = false;
         this.game.playedCards.push(this.currentCard);
       }, 1000);
+
     }
   }
 
@@ -38,7 +41,9 @@ export class GameSectionComponent implements OnInit {
     const dialogRef = this.dialog.open(AddPlayerDialogComponent);
 
     dialogRef.afterClosed().subscribe(name => {
-      this.game.players.push(name);
+      if (name && name.length > 0) {
+        this.game.players.push(name);
+      }
     });
   }
 }

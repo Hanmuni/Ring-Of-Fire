@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-game-instructions',
   templateUrl: './game-instructions.component.html',
   styleUrls: ['./game-instructions.component.scss']
 })
-export class GameInstructionsComponent implements OnInit, OnChanges {
+export class GameInstructionsComponent implements OnChanges {
   cardAction = [
     { title: 'Waterfall', description: 'Everyone has to start drinking at the same time. As soon as player 1 stops drinking, player 2 may stop drinking. Player 3 may stop as soon as player 2 stops drinking, and so on.' },
     { title: 'You', description: 'You decide who drinks' },
@@ -19,16 +19,13 @@ export class GameInstructionsComponent implements OnInit, OnChanges {
     { title: 'Dudes', description: 'All men drink.' },
     { title: 'Quizmaster', description: 'You are now the question master. If you ask a player a question, they have to answer and then drink.' },
     { title: 'Never have I ever...', description: 'Say something you never did. Everyone who did it has to drink.' },
-    { title: 'Rule', description: 'Make a rule. Everyone needs to drink when he breaks the rule.' },
+    { title: 'Rule', description: 'Make a rule. Everyone needs to drink when they break the rule.' },
   ];
 
   title: string = '';
   description: string = '';
   @Input() card: string;
 
-  ngOnInit(): void {
-
-  }
   ngOnChanges(): void {
     if (this.card) {
       let cardNumber = +this.card.split('_')[1];

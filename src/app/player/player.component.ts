@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -8,9 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PlayerComponent implements OnInit {
   @Input() name;
   @Input() activePlayer: boolean = false;
-
-  constructor() { }
-
+  
   ngOnInit(): void {
   }
 

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from '../add-player-dialog/add-player-dialog.component';
-import { Firestore, collectionData, collection, setDoc, doc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Component({
   selector: 'app-game-section',
@@ -14,36 +15,45 @@ export class GameSectionComponent implements OnInit {
   drawCardAnimation = false;
   currentCard: string = '';
   game: Game;
-  games$: Observable<any>;
 
-  constructor(private firestore: Firestore, public dialog: MatDialog) {
-    const set = collection(firestore, 'games');
-    this.games$ = collectionData(set);
 
-    this.games$.subscribe((newGames) => {
-      console.log('New Games: ', newGames);
-    });
-   }
+  constructor(private firestore: AngularFirestore, public dialog: MatDialog) {
+
+  }
 
   ngOnInit() {
     this.newGame();
+    this
+      .firestore
+      .collection('games')
+      .valueChanges()
+      .subscribe((game) => {
+        console.log(this.game);
+      })
   }
   newGame() {
     this.game = new Game();
-    console.log(this.game);
+    this.firestore
+      .collection('games')
+      .add(this.game.toJSON());
   }
   drawCard() {
-    if (!this.drawCardAnimation) {
-      this.drawCardAnimation = true;
-      this.currentCard = this.game.stack.pop();
-      this.game.currentPlayer++;
-      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+    if (this.game.players.length < 2) {
+      this.openDialog();
+    }
+    else {
+      if (!this.drawCardAnimation) {
+        this.drawCardAnimation = true;
+        this.currentCard = this.game.stack.pop();
+        this.game.currentPlayer++;
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 
-      setTimeout(() => {
-        this.drawCardAnimation = false;
-        this.game.playedCards.push(this.currentCard);
-      }, 1000);
+        setTimeout(() => {
+          this.drawCardAnimation = false;
+          this.game.playedCards.push(this.currentCard);
+        }, 1000);
 
+      }
     }
   }
 

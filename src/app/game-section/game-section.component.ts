@@ -12,8 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./game-section.component.scss']
 })
 export class GameSectionComponent implements OnInit {
-  drawCardAnimation = false;
-  currentCard: string = '';
   game: Game;
   gamesId: string;
 
@@ -40,29 +38,30 @@ export class GameSectionComponent implements OnInit {
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
           this.game.stack = game.stack;
+          this.game.drawCardAnimation = game.drawCardAnimation;
+          this.game.currentCard = game.currentCard;
         })
     });
   }
   newGame() {
     this.game = new Game();
-    //this.firestore
-    // .collection('games')
-    //.add(this.game.toJSON());
   }
   drawCard() {
     if (this.game.players.length < 2) {
       this.openDialog();
     }
     else {
-      if (!this.drawCardAnimation) {
-        this.drawCardAnimation = true;
-        this.currentCard = this.game.stack.pop();
+      if (!this.game.drawCardAnimation) {
+        this.game.drawCardAnimation = true;
+        this.game.currentCard = this.game.stack.pop();
         this.game.currentPlayer++;
         this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+        this.updateGame();
 
         setTimeout(() => {
-          this.drawCardAnimation = false;
-          this.game.playedCards.push(this.currentCard);
+          this.game.drawCardAnimation = false;
+          this.game.playedCards.push(this.game.currentCard);
+          this.updateGame();
         }, 1000);
 
       }
@@ -75,8 +74,17 @@ export class GameSectionComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.updateGame();
       }
     });
+  }
+
+  updateGame() {
+    this
+        .firestore
+        .collection('games')
+        .doc(this.gamesId)
+        .update(this.game.toJSON());
   }
 }
 

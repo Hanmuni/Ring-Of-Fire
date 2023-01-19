@@ -9,15 +9,15 @@
       src="assets/img/cards/card_cover.png">
     <img (click)="drawCard()" style="right: 25px" class="top-card" src="assets/img/cards/card_cover.png">
     <img *ngFor="let card of game.playedCards;" class="played-card" src="assets/img/cards/{{card}}.png">
-    <img (click)="drawCard()" style="right: 25px" *ngIf="drawCardAnimation" class="draw-card"
-      src="assets/img/cards/{{currentCard}}.png">
+    <img (click)="drawCard()" style="right: 25px" *ngIf="game.drawCardAnimation" class="draw-card"
+      src="assets/img/cards/{{game.currentCard}}.png">
 
 
   </div>
 
 </div>
 
-<app-game-instructions [card]="currentCard" class="game-description-position"></app-game-instructions>
+<app-game-instructions [card]="game.currentCard" class="game-description-position"></app-game-instructions>
 
 <button mat-fab color="primary" (click)="openDialog()" class="add-btn">
   <mat-icon>add</mat-icon>

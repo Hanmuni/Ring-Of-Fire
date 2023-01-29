@@ -22,11 +22,11 @@ export class GameSectionComponent implements OnInit {
 
   ngOnInit() {
     this.newGame();
-    
+
     this.route.params.subscribe((params) => {
       console.log(params['id']);
       this.gamesId = params['id'];
-      
+
       this
         .firestore
         .collection('games')
@@ -72,6 +72,8 @@ export class GameSectionComponent implements OnInit {
     const dialogRef = this.dialog.open(AddPlayerDialogComponent);
 
     dialogRef.afterClosed().subscribe(name => {
+      
+
       if (name && name.length > 0) {
         this.game.players.push(name);
         this.updateGame();
@@ -81,10 +83,10 @@ export class GameSectionComponent implements OnInit {
 
   updateGame() {
     this
-        .firestore
-        .collection('games')
-        .doc(this.gamesId)
-        .update(this.game.toJSON());
+      .firestore
+      .collection('games')
+      .doc(this.gamesId)
+      .update(this.game.toJSON());
   }
 }
 

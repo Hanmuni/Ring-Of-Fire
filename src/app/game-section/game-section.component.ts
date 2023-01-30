@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from '../add-player-dialog/add-player-dialog.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { EditPlayerComponent } from '../edit-player/edit-player.component';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class GameSectionComponent implements OnInit {
           this.game.currentPlayer = game.currentPlayer;
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
+          this.game.playersImages = game.playersImages;
           this.game.stack = game.stack;
           this.game.drawCardAnimation = game.drawCardAnimation;
           this.game.currentCard = game.currentCard;
@@ -72,12 +74,21 @@ export class GameSectionComponent implements OnInit {
     const dialogRef = this.dialog.open(AddPlayerDialogComponent);
 
     dialogRef.afterClosed().subscribe(name => {
-      
+
 
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.playersImages.push('man.png');
         this.updateGame();
       }
+    });
+  }
+
+  editPlayer(playerId: number) {
+    const dialogRef = this.dialog.open(EditPlayerComponent);
+    dialogRef.afterClosed().subscribe((edit: string) => {
+      this.game.playersImages[playerId] = edit;
+      this.updateGame();
     });
   }
 

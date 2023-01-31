@@ -6,13 +6,17 @@
   border-bottom-left-radius: 50px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  width: 150px;
+  width: auto;
   margin: 8px;
+  overflow: hidden;
+  
+  
 
   span {
     font-size: 16px;
-    margin-left: 16px;
+    margin: 8px;
     color: white;
+    width: auto;
   }
 
   img {
@@ -21,6 +25,7 @@
     object-fit: cover;
     border-radius: 100%;
     border:2px solid black;
+    margin: 4px;
   }
 
 }

@@ -87,8 +87,19 @@ export class GameSectionComponent implements OnInit {
   editPlayer(playerId: number) {
     const dialogRef = this.dialog.open(EditPlayerComponent);
     dialogRef.afterClosed().subscribe((edit: string) => {
-      this.game.playersImages[playerId] = edit;
-      this.updateGame();
+      if (edit) {
+
+        if (edit == 'DELETE') {
+          this.game.playersImages.splice(playerId, 1);
+          this.game.players.splice(playerId, 1);
+        }
+
+        else {
+          this.game.playersImages[playerId] = edit;
+        }
+
+        this.updateGame();
+      }
     });
   }
 

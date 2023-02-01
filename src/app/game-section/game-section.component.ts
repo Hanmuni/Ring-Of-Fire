@@ -15,9 +15,10 @@ import { EditPlayerComponent } from '../edit-player/edit-player.component';
 export class GameSectionComponent implements OnInit {
   game: Game;
   gamesId: string;
+  gameOver = false;
 
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) {
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog,) {
 
   }
 
@@ -53,7 +54,11 @@ export class GameSectionComponent implements OnInit {
       this.openDialog();
     }
     else {
-      if (!this.game.drawCardAnimation) {
+      if(this.game.stack.length == 0) {
+        this.gameOver = true;
+      }
+
+      else if (!this.game.drawCardAnimation) {
         this.game.drawCardAnimation = true;
         this.game.currentCard = this.game.stack.pop();
         this.game.currentPlayer++;
@@ -68,6 +73,7 @@ export class GameSectionComponent implements OnInit {
 
       }
     }
+
   }
 
   openDialog(): void {
@@ -109,6 +115,10 @@ export class GameSectionComponent implements OnInit {
       .collection('games')
       .doc(this.gamesId)
       .update(this.game.toJSON());
+  }
+
+  startNewGame() {
+   
   }
 }
 
